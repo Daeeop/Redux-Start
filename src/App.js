@@ -1,9 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
-// import TodoList from "./components/TodoList";
-// import TodoForm from "./components/TodoForm";
-import TodoFormContainer from "./containers/TodoFormContainer";
-import TodoListContainer from "./containers/TodoListContainer";
+import { Router, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Users from "./pages/Users";
+import Todos from "./pages/Todos";
+import history from "./history";
+import { ConnectedRouter } from "connected-react-router";
 
 // function App({ store }) {
 //   const [state, setState] = useState(store.getState());
@@ -35,15 +37,17 @@ import TodoListContainer from "./containers/TodoListContainer";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        {/* <TodoForm />
-        <TodoList /> */}
-        <TodoListContainer />
-        <TodoFormContainer />
-      </header>
-    </div>
+    // <Router history={history}>
+    //   <Route path="/" exact component={Home} />
+    //   <Route path="/todos" exact component={Todos} />
+    //   <Route path="/users" exact component={Users} />
+    // </Router>
+
+    <ConnectedRouter history={history}>
+      <Route path="/" exact component={Home} />
+      <Route path="/todos" exact component={Todos} />
+      <Route path="/users" exact component={Users} />
+    </ConnectedRouter>
   );
 }
 

@@ -1,4 +1,4 @@
-import { connect, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import TodoList from "../components/TodoList";
 
 // state를 매개변수로 받아서 props 객체로 만들어 return 해준다..
@@ -18,6 +18,8 @@ import TodoList from "../components/TodoList";
 //   mapStateToProps,
 //   mapDispatchToProps
 // )(TodoList);
+
+// mapStateToProps의 리턴 값이 TodoList에 들어간다.
 
 // Hook으로 작성 (많이 씀)
 function TodoListContainer() {
