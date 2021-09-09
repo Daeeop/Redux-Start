@@ -5,6 +5,8 @@ import thunk from "redux-thunk";
 import promise from "redux-promise-middleware";
 import history from "../history";
 import { routerMiddleware } from "connected-react-router";
+import createSagaMiddleware from "redux-saga";
+import rootSaga from "./modules/rootSaga";
 
 // 미들 웨어(함수)
 // next : 현재 미들웨어가 아니고 다음 미들웨어를 지칭
@@ -37,15 +39,20 @@ import { routerMiddleware } from "connected-react-router";
 //   };
 // }
 
+const sagaMiddleware = createSagaMiddleware();
+
 const store = createStore(
   reducer,
   composeWithDevTools(
     applyMiddleware(
       thunk.withExtraArgument({ history }),
       promise,
-      routerMiddleware(history)
+      routerMiddleware(history),
+      sagaMiddleware
     )
   )
 );
+
+sagaMiddleware.run(rootSaga);
 
 export default store;

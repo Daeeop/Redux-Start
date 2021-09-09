@@ -1,4 +1,6 @@
 import axios from "axios";
+import { push } from "connected-react-router";
+import { call, delay, put, takeEvery } from "redux-saga/effects";
 
 // 액션 타입 정의
 // users에 대한 액션 타입 / 생성자
@@ -121,4 +123,33 @@ export function getUsersPromise() {
       return res.data;
     },
   };
+}
+
+// redux-saga
+// generator 생성 함수
+function* getUsersSaga(action) {
+  try {
+    yield put(getUsersStart());
+    // sleep
+    yield delay(2000);
+    const res = yield call(axios.get, "https://api.github.com/users");
+    yield put(getUsersSuccess(res.data));
+    // 페이지 이동
+    yield put(push("/"));
+  } catch (error) {
+    yield put(getUsersFail(error));
+  }
+}
+// 액션 타입을 정의
+const GET_USERS_SAGA_START = "GET_USERS_SAGA_START";
+
+// 액션 생성자 함수
+export function getUsersSagaStart() {
+  return {
+    type: GET_USERS_SAGA_START,
+  };
+}
+
+export function* usersSaga() {
+  yield takeEvery("GET_USERS_SAGA_START", getUsersSaga);
 }
